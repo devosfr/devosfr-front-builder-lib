@@ -1,0 +1,14 @@
+{
+    "components": [
+        {
+            "id": 1,
+            "info": "exemplo 1 (html) - Alinhando elementos dentro de uma div com flex",
+            "content": "<template>\n\t\t<div class='d-flex align-items-center'>\t\t<v-icon class='d-inline-block'>\t\t\t{{ 'mdi-check-circle' }}\t\t</v-icon>\n\t\t<div class='d-inline-block'>\t\tMeu texto\t\t</div>\t</div>\n</template>\n\n<script type='text/javascript' src='./script.js' />\n<style scoped type='text/css' src='./style.css' />"
+        },
+        {
+            "id": 2,
+            "info": "exemplo 2 (text) - Quando API Não reconhece o DynamoDB- Solução",
+            "content": "1 - Vou no arquivo package.json e verifico se o plugin aws-sdk está instalado \n2 - No arquivo serverless.yml vou em provider>environment ou na propriedade environments da minha função lâmbda \n3 - vou no arquivo serverless.yml e procuro por 'iam>role>managedPolicies ou na propriedade iamRoleStatements da minha função lâmbda', na \nmesma linha do 'managedPolicies' eu ponho isso: \nstatements: \n\t\t# DynamoDB\n- Effect: Allow\nAction:\n- dynamodb:Query\n- dynamodb:Sacam\n- dynamodb:GetItem\n- dynamodb:PutItem\n- dynamodb:UpdateItem\n- dynamodb:DeleteItem\nResource:\n- 'arn:aws:dynamodb:us-east-1:${env:AWS_ACCOUNT_ID}:table/${env:TABLE_NAME_SETTINGS}'"
+        }
+    ]
+}

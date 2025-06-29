@@ -1,0 +1,3 @@
+{
+    "body": "<template>\n\n\t\t<h1>Just a simple text</h1>\n\n</template>\n\n<script type='text/javascript' src='./script.js' />\n\n<style scoped type='text/css' src='./style.css' />"
+}

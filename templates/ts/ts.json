@@ -1,0 +1,3 @@
+{
+    "body": "import { defineComponent } from 'vue';\n\n export default defineComponent({})"
+}

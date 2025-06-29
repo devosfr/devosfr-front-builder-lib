@@ -1,0 +1,44 @@
+{
+  "name": "@oseiasdev/front-builder",
+  "version": "1.41.0",
+  "description": "CLI tool to quickly scaffold Vue/Nuxt components and pages",
+  "keywords": [
+    "nuxt",
+    "vue",
+    "cli",
+    "scaffold",
+    "generator",
+    "pages",
+    "components",
+    "typescript",
+    "vue3",
+    "nuxt3"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "front-builder",
+    "dev": "dotenv sls offline start"
+  },
+  "bin": {
+    "front-builder": "./bin/front-builder.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devosfr/front-builder-lib.git"
+  },
+  "author": "Oséias Freitas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devosfr/front-builder-lib/issues"
+  },
+  "homepage": "https://github.com/devosfr/front-builder-lib#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "dotenv-cli": "^7.4.1",
+    "fs": "^0.0.1-security",
+    "prettier": "^3.5.3",
+    "prompt-sync": "^4.2.0",
+    "serverless": "^3.38.0",
+    "serverless-offline": "^13.3.3"
+  }
+}
