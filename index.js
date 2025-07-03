@@ -21,7 +21,6 @@ const entry = require('prompt-sync')({
 });
 let vueFile = 'index.vue';
 // js
-// mark-w
 let jsVueFileContentWithScript = '<template>\n\n\t<h1>Just a simple text</h1>\n\n</template>\n\n<script type="text/javascript">export default {}</script>\n\n<style scoped type="text/css" src="./style.css" />';
 let jsVueFileContent = vueFileContentHtmlBody.body;
 let jsFile = 'script.js';
@@ -227,61 +226,5 @@ module.exports.tsMakePage = async (pageName, mainPage, sameFile) => {
 
       }
    }
-};
-
-module.exports.makeByComponent = async ({
-   pageName,
-   mainPage,
-   componentChoice
-}) => {
-   var path;
-   console.log(mainPage);
-   if (mainPage !== 'pages' && mainPage !== 'components') {
-      console.log(messages[0][language]?.message);
-      return null
-   }
-
-   // When have more than one folder
-   if (pageName.indexOf('/') > -1) {
-
-      // var folders = pageName.split('/');
-      // count = folders.length;
-      // folders.forEach((folder, index) => {
-      //    switch (true) {
-      //       case index > lastPosition:
-      //          // console.log('TESTE 1');
-      //          path = join(`${mainPage}/${lastFolder}/${folder}/`);
-      //          fs.mkdirSync(path);
-      //          writeFile(path + vueFile, vueFileContent);
-      //          writeFile(path + jsFile, jsFileContent);
-      //          writeFile(path + styleFile, '');
-      //          break;
-
-      //       default:
-      //          // Está caindo aqui
-      //          // console.log('TESTE 2');
-      //          path = join(`${mainPage}/${folder}/`);
-      //          fs.mkdirSync(path);
-      //          writeFile(path + vueFile, vueFileContent);
-      //          writeFile(path + jsFile, jsFileContent);
-      //          writeFile(path + styleFile, '');
-      //          break;
-      //    }
-
-      //    lastPosition = index;
-      //    lastFolder = folder
-      // });
-   } else {
-
-      path = join(`${mainPage}/${pageName}/`);
-      fs.mkdirSync(path);
-      formattedVue = await prettier.format(componentChoice.content, { parser: 'vue' });
-      formattedTs = await prettier.format(jsFileContent, { parser: 'babel' });
-
-      writeFile(path + vueFile, formattedVue);
-      writeFile(path + jsFile, formattedTs);
-      writeFile(path + styleFile, '');
-   }
-
 };
 

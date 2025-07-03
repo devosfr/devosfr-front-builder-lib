@@ -1,6 +1,21 @@
 const entry = require('prompt-sync')({
   sigint: true
 });
+const inquirer = require('inquirer');
+const generateComponent = require('./generate-component.js');
+
+const primeVueComponents = [
+  'Button',
+  'Card',
+  'Dialog',
+  'InputText',
+  'Dropdown',
+  'Table',
+  'Toast',
+  'Calendar',
+  'Avatar',
+  'ProgressBar'
+];
 const messages = [
   {
     en: {
@@ -78,87 +93,122 @@ const messages = [
     es: {
       message: 'Nombre inválido para el directorio, por favor introduzca páginas o componentes.'
     }
+  },
+  {
+    en: {
+      choiceQuestion: 'Would you like to create a prime-vue component? (y/n): '
+    },
+    pt: {
+      choiceQuestion: 'Gostaria de criar um componente prime-vue? (y/n): '
+    },
+    es: {
+      choiceQuestion: '¿Te gustaría crear un componente prime-vue? (y/n): '
+    }
+  },
+   {
+    en: {
+      componentChosen: 'You chose the component'
+    },
+    pt: {
+      componentChosen: 'Você escolheu o componente'
+    },
+    es: {
+      componentChosen: 'Tu elegiste el componente'
+    }
+  },
+   {
+    en: {
+      selectThePrimeVueComponent: 'Select the PrimeVue component:'
+    },
+    pt: {
+      selectThePrimeVueComponent: 'Selecione o componente PrimeVue:'
+    },
+    es: {
+      selectThePrimeVueComponent: 'Seleccione el componente PrimeVue:'
+    }
   }
 ];
-// comment just before upload de code.
+
 const Build = require('./index.js');
-
-// mark uncomment just before upload de code.
-// const Build = require('@oseiasdev/front-builder');
-// const componentsList = require('./templates/components.json');
-
-
+const { register } = require('module');
 let value = null;
 let main = null;
 let type = null;
-// let componentQuestionResponse = null;
 let language;
 
-async function init(){
+async function init() {
 
   language = entry('Choose language, write en, pt or es: ');
   language && Build.setLanguage(language);
+
+let choice = entry(messages[7][language]?.choiceQuestion || messages[7].en.choiceQuestion);
+
+if (choice === 'y') {
+ const folderName = entry(messages[0][language]?.folderName || messages[0].en.folderName);
+
+  inquirer
+  .prompt([
+    {
+      type: 'list',
+      name: 'component',
+      message: `${messages[9][language]?.selectThePrimeVueComponent || messages[9].en.selectThePrimeVueComponent}:`,
+      choices: primeVueComponents
+    }
+  ])
+  .then((answers) => {
+    console.log(`${messages[8][language]?.componentChosen || messages[8].en.componentChosen}: ${answers.component}`);
+    generateComponent(answers.component, folderName);
+    console.log('🤓 Criado com sucesso!');
+  });
   
-  
+  return;
+}
   main = entry(messages[1][language]?.targetPlace);
   console.log('Main folder: ' + main);
 
-    // mark
-    value =  entry(messages[0][language]?.folderName || messages[0].en.folderName);
-    console.log('Hierarchy: ' + value);  
-  
+
+  value = entry(messages[0][language]?.folderName || messages[0].en.folderName);
+ 
   type = entry(messages[2][language]?.chooseFileExtension);
-  console.log('Type picked: ' + type);
   
-  // TODO: mark content 
-  // componentQuestionResponse = entry('Do you want generate with a content? (y/n): ');
-  // if (componentQuestionResponse === 'y') {
-  
-  
-  //   // Aqui entraria a IA perguntando qual o conteúdo e qual frame-work que o usuário quer usar para o componente 
-  //   const choice = entry('Chose 1 to typescript and html in the same file or 2 to use in separate files: ');
-  
-  //   const component = componentsList.components.find(co => co.id === parseInt(choice));
-  
-  //   Build.makeByComponent({
-  //     pageName: value,
-  //     mainPage: main,
-  //     componentChoice: component
-  //   });
-  
-  //   return;
-  // }
-  
+
   if (type === 'js') {
     const sameFile = entry(messages[3][language]?.chooseSeparateOrJustOneFile);
     console.log('Chosed: ' + sameFile);
     switch (true) {
       case sameFile.toLocaleLowerCase() === 'y' || sameFile.toLocaleLowerCase() === 'n':
         //  TODO: jsMakePage needs be generic
-      const response = await Build.jsMakePage(value, main, sameFile);
+        const response = await Build.jsMakePage(value, main, sameFile);
         if (response !== 'folder-exists' && response !== 'invalid-folder-name') {
-         
-         console.log('🤓 Criado com sucesso!');
-        } 
-        break;      
+
+          console.log('🤓 Criado com sucesso!');
+        }
+        break;
     }
 
   } else if (type === 'ts') {
     // TODO: Chose 1 to typescript and html in the same file or 2 to use in separate files
     const sameFile = entry(messages[3][language]?.chooseSeparateOrJustOneFile);
     console.log('Chosed: ' + sameFile);
-  
+
     switch (true) {
       case sameFile.toLocaleLowerCase() === 'y' || sameFile.toLocaleLowerCase() === 'n':
-      //  TODO: tsMakePage needs be generic  
-      const response = await Build.tsMakePage(value, main, sameFile);
+        const path = require('path');
+
+        const currentFileDir = __dirname; // diretório do arquivo atual
+
+        const newFolderPath = path.join(currentFileDir, 'templates', 'vue');
+
+        console.log(newFolderPath);
+        //  TODO: tsMakePage needs be generic  
+        const response = await Build.tsMakePage(value, main, sameFile);
         if (response !== 'folder-exists' && response !== 'invalid-folder-name') {
-         
-         console.log('🤓 Criado com sucesso!');
-        } 
-        break;      
+
+          console.log('🤓 Criado com sucesso!');
+        }
+        break;
     }
-   
+
   } else {
     console.log(messages[5][language]?.errorMessage2);
     type = entry(messages[2][language]?.chooseFileExtension);
