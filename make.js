@@ -6,15 +6,19 @@ const generateComponent = require('./generate-component.js');
 
 const primeVueComponents = [
   'Button',
+  'SpeedDial',
+  'SplitButton',
+  'DataTable',
+  'Paginator',
   'Card',
   'Dialog',
   'InputText',
-  'Dropdown',
-  'Table',
+  'AutoComplete',
   'Toast',
-  'Calendar',
   'Avatar',
-  'ProgressBar'
+  'ProgressBar',
+  'Chip',
+  'Tabs'
 ];
 const messages = [
   {
@@ -131,6 +135,7 @@ const messages = [
 
 const Build = require('./index.js');
 const { register } = require('module');
+const { debug } = require('console');
 let value = null;
 let main = null;
 let type = null;
@@ -157,6 +162,7 @@ if (choice === 'y') {
   ])
   .then((answers) => {
     console.log(`${messages[8][language]?.componentChosen || messages[8].en.componentChosen}: ${answers.component}`);
+    debugger;
     generateComponent(answers.component, folderName);
     console.log('🤓 Criado com sucesso!');
   });

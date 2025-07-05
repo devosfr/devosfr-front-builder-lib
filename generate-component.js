@@ -3,9 +3,9 @@ const fs = require('fs');
 const path = require('path');
 module.exports = function generateComponent(componentType, folderName) {
   let dirPath;
-  
+  debugger;
 if (componentType) {
-  const componentTemplate = fs.readFileSync(path.join(__dirname, './templates/prime-vue/Button.vue'), 'utf-8');
+  const componentTemplate = fs.readFileSync(path.join(__dirname, `./templates/prime-vue/${componentType}.vue`), 'utf-8');
 
   const isSubFolder = folderName.indexOf('/') > -1;
   let mainPage = 'components';
@@ -22,21 +22,15 @@ if (componentType) {
                 
              } catch (error) {
                 if (error.code === 'EEXIST') {
-                   
                    console.log(`❌ ${messages[1][language]?.alreadyExistsMessage}`);
                    return 'folder-exists'
                 }
              }
-
              break;
-
           default:
              dirPath = path.join(`${mainPage}/${folder}`);
              const exists = fs.existsSync(dirPath);
-             
-             // console.log('Existe?', exists) // Deve imprimir true se existir
              if (!exists) {
-              
                 fs.mkdirSync(dirPath);
              }
              break;
@@ -56,7 +50,6 @@ if (componentType) {
   const dirPath = path.join(process.cwd(), `components/${folderName}`);
   // mark
   const targetPath = path.join(dirPath, `index.vue`);
-
   if (!fs.existsSync(dirPath)) fs.mkdirSync(dirPath, { recursive: true });
   fs.writeFileSync(targetPath, componentTemplate);
  }

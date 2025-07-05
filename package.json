@@ -1,6 +1,6 @@
 {
   "name": "@oseiasdev/front-builder",
-  "version": "1.42.0",
+  "version": "1.43.0",
   "description": "CLI tool to quickly scaffold Vue/Nuxt components and pages",
   "keywords": [
     "nuxt",
